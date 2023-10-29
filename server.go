@@ -1,9 +1,14 @@
 package main
 
 import (
+	"io"
+	"os"
+
 	"github.com/felipedias-dev/poc-api-golang-gin-graphql/controller"
+	"github.com/felipedias-dev/poc-api-golang-gin-graphql/middlewares"
 	"github.com/felipedias-dev/poc-api-golang-gin-graphql/service"
 	"github.com/gin-gonic/gin"
+	ginDump "github.com/tpkeeper/gin-dump"
 )
 
 var (
@@ -11,8 +16,22 @@ var (
 	videoController controller.VideoController = controller.New(videoService)
 )
 
+func setupLogOutput() {
+	f, _ := os.Create("gin.log")
+	gin.DefaultWriter = io.MultiWriter(f, os.Stdout)
+}
+
 func main() {
-	server := gin.Default()
+	setupLogOutput()
+
+	server := gin.New()
+
+	server.Use(
+		gin.Recovery(),
+		middlewares.Logger(),
+		middlewares.BasicAuth(),
+		ginDump.Dump(),
+	)
 
 	server.GET("/videos", func(ctx *gin.Context) {
 		ctx.JSON(200, videoController.FindAll())
