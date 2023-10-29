@@ -1,2 +1,2 @@
 # poc-api-golang-gin-graphql
-POC for API using Golang, Gin and GraphQL
+POC for API built with Golang, Gin and GraphQL
