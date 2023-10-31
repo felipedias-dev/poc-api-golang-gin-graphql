@@ -9,7 +9,7 @@ import (
 	"github.com/felipedias-dev/poc-api-golang-gin-graphql/middlewares"
 	"github.com/felipedias-dev/poc-api-golang-gin-graphql/service"
 	"github.com/gin-gonic/gin"
-	// ginDump "github.com/tpkeeper/gin-dump"
+	_ "github.com/tpkeeper/gin-dump"
 )
 
 var (
